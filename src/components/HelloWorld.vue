@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid wallpaper-register">
+  <div class="container-fluid">
     <div class="row">
       <div class="col-md-5">
         <div class="row">
@@ -93,7 +93,7 @@ onMounted(async () => {
 .wallpaper-register {
   background: url('../assets/pexels-chevanon-photography-324028.jpg') no-repeat center center;
   background-size: cover;
-  height: 1200px;
+  height: 100px;
   position: absolute;
   background-color: gray;
   width: 100%;
