@@ -1,7 +1,20 @@
 <template>
   <div class="container-fluid wallpaper-register">
     <div class="row">
-      <div class="col-md-12">{{ products }}</div>
+      <div class="col-md-5">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card mt-3">
+              <div class="card-body">Avaşin Cafe</div>
+            </div>
+          </div>
+          <div class="col-md-6" v-for="(item,index) in 6" :key="item">
+            <div class="card mt-3">
+              <div class="card-body">Cart {{ index + 1 }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -21,7 +34,7 @@ const getProducts = async () => {
     })
     .catch((error) => console.log(error));
 };
-onMounted(async() => {
+onMounted(async () => {
   await getProducts();
 })
 </script>
@@ -54,4 +67,5 @@ li {
 
 a {
   color: #42b983;
-}</style>
+}
+</style>
