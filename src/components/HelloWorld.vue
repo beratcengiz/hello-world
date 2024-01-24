@@ -8,7 +8,7 @@
 
 <script setup>
 import axios from 'axios'
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 const products = ref([]);
 const getProducts = async () => {
   await axios
@@ -21,6 +21,9 @@ const getProducts = async () => {
     })
     .catch((error) => console.log(error));
 };
+onMounted(async() => {
+  await getProducts();
+})
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
