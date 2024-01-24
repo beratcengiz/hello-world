@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid" style="border:1px solid red">
+  <div class="container-fluid wallpaper-register">
     <div class="row">
       <div class="col-md-12">denemeler</div>
     </div>
@@ -17,6 +17,15 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.wallpaper-register {
+    background: url('../assets/pexels-chevanon-photography-324028.jpg') no-repeat center center;
+    background-size: cover;
+    height: 1200px;
+    position: absolute;
+    background-color: gray;
+    width: 100%;
+    z-index: -1;
+}
 h3 {
   margin: 40px 0 0;
 }
