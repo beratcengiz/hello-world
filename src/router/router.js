@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import HelloWorldVue from '@/components/HelloWorld.vue';
 import HelloDenemeVue from '@/components/HelloDeneme.vue';
 
+
 const routes = [
     {
         path: '/',
