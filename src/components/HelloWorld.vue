@@ -1,6 +1,8 @@
 <template>
-  <div>
-    merhaba
+  <div class="container-fluid" style="border:1px solid red">
+    <div class="row">
+      <div class="col-md-12">denemeler</div>
+    </div>
   </div>
 </template>
 
