@@ -97,7 +97,7 @@ onMounted(async () => {
 const getMealOfDay = async () => {
     await axios
         .get(
-            "https://berat.tostbang.com/api/mealofday"
+            "https://avasin20240124173421.azurewebsites.net/api/MealOfDay"
         )
         .then((res) => {
             console.log('res', res)
@@ -108,7 +108,7 @@ const getMealOfDay = async () => {
 const getProducts = async () => {
     await axios
         .get(
-            "https://berat.tostbang.com/api/Products"
+            "https://avasin20240124173421.azurewebsites.net/api/Products"
         )
         .then((res) => {
             console.log('res', res)
