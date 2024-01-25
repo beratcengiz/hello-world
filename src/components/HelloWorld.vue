@@ -36,51 +36,22 @@
             <div class="col-md-7">
                 <div class="row mr-2">
                     <div class="col-md-12">
-                        <!-- <TabMenu :model="items" class="mt-3" style="background-color: white;">
-                            <template #item="{ item, props, hasSubmenu, root }">
-                                <a v-ripple class="flex align-items-center" v-bind="props.action" style="color:black"
-                                    @click="getMenuItem(item,hasSubmenu,root)">
-                                    <span :class="item.icon" />
-                                    <span class="ml-2">{{ item.label }}</span>
-                                    <Badge v-if="item.badge" :class="{ 'ml-auto': !root, 'ml-2': root }"
-                                        :value="item.badge" />
-                                    <span v-if="item.shortcut"
-                                        class="ml-auto border-1 surface-border border-round surface-100 text-xs p-1">{{
-                                            item.shortcut }}</span>
-                                    <i v-if="hasSubmenu"
-                                        :class="['pi pi-angle-down text-primary', { 'pi-angle-down ml-2': root, 'pi-angle-right ml-auto': !root }]"></i>
-                                        </a>
+                    </div>
+                    <div class="col-md-12">
+                        <Card class="mt-2 opacity-80 d-flex justify-content-center">
+                            <template #content>
+                                <h5>{{ items.label}}</h5>
                             </template>
-                        </TabMenu> -->
-
-                        <div class="card mt-3" >
-                          <Menubar :model="items">
-                              <template #item="{ item, props, hasSubmenu, root }">
-                                  <a v-ripple class="flex align-items-center" v-bind="props.action" style="color:black"
-                                      @click="getMenuItem(item)">
-                                      <span :class="item.icon" />
-                                      <span class="ml-2">{{ item.label }}</span>
-                                      <Badge v-if="item.badge" :class="{ 'ml-auto': !root, 'ml-2': root }"
-                                          :value="item.badge" />
-                                      <span v-if="item.shortcut"
-                                          class="ml-auto border-1 surface-border border-round surface-100 text-xs p-1">{{
-                                              item.shortcut }}</span>
-                                      <i v-if="hasSubmenu"
-                                          :class="['pi pi-angle-down text-primary', { 'pi-angle-down ml-2': root, 'pi-angle-right ml-auto': !root }]"></i>
-                                  </a>
-                              </template>
-                          </Menubar>
-                         
-                      </div>
+                        </Card>
                     </div>
                     <div class="col-md-12" v-for="item in filterProducts" :key="item">
                         <div class="custom-scroll-container">
                             <Card class="mt-2 opacity-80 " style="color:black;border: 1px solid grey;">
-                                <template #title> {{ item.category }} </template>
+                                <!-- <template #title> {{ item.category }} </template> -->
                                 <template #content>
                                     <div class="d-flex">
                                         <img class="opacity-full" alt="user header" style="width: 150px;height: 150px;"
-                                            :src="item.image" />
+                                            :src="item.url" />
                                         <div class="d-flex flex-column">
                                             <div class="ml-5">
                                                 <h3 style="border-bottom: 1px solid black;">{{ item.name }}</h3>
@@ -111,15 +82,17 @@ import axios from "axios";
 const products = ref([]);
 const selectedCardIndex = ref(null)
 const filterProducts = ref([])
+const items = ref('')
 const a = ref([])
 onMounted(async () => {
     await getProducts();
     filterProducts.value = products.value.filter(el => el.category == 'Sıcak İçecekler');
+    items.value = {label:'Sıcak İçecekler'}
 })
 const getMealOfDay = async () => {
     await axios
         .get(
-            "https://mock-data-5ynd.onrender.com/mealofday"
+            "https://berat.tostbang.com/api/mealofday"
         )
         .then((res) => {
             console.log('res', res)
@@ -130,7 +103,7 @@ const getMealOfDay = async () => {
 const getProducts = async () => {
     await axios
         .get(
-            "https://mock-data-5ynd.onrender.com/posts"
+            "https://berat.tostbang.com/api/Products"
         )
         .then((res) => {
             console.log('res', res)
@@ -139,32 +112,32 @@ const getProducts = async () => {
         })
         .catch((error) => console.log(error));
 };
-const items = ref([
-    {
-        label: 'Sıcak İçecekler',
-        icon: 'pi pi-home'
-    },
-    {
-        label: 'Soğuk İçecekler',
-        icon: 'pi pi-star'
-    },
-    {
-        label: 'Atıştırmalıklar',
-        icon: 'pi pi-home'
-    },
-    {
-        label: 'Tatlılar',
-        icon: 'pi pi-star'
-    },
-    {
-        label: 'Nargile',
-        icon: 'pi pi-star'
-    },
-    {
-        label: "Yemekler",
-        icon: 'pi pi-star'
-    },
-]);
+// const items = ref([
+//     {
+//         label: 'Sıcak İçecekler',
+//         icon: 'pi pi-home'
+//     },
+//     {
+//         label: 'Soğuk İçecekler',
+//         icon: 'pi pi-star'
+//     },
+//     {
+//         label: 'Atıştırmalıklar',
+//         icon: 'pi pi-home'
+//     },
+//     {
+//         label: 'Tatlılar',
+//         icon: 'pi pi-star'
+//     },
+//     {
+//         label: 'Nargile',
+//         icon: 'pi pi-star'
+//     },
+//     {
+//         label: "Yemekler",
+//         icon: 'pi pi-star'
+//     },
+// ]);
 const list = ref([
     {
         label: 'Sıcak İçecekler',
@@ -193,11 +166,14 @@ const list = ref([
 
 ])
 const cardControls = async (item, index) => {
+    
     if (item == 'Nargile') {
+        items.value = {label:'Nargile'}
         selectedCardIndex.value = 6;
         filterProducts.value = products.value.filter(el => el.category == item);
     } else {
         console.log('cardElement', index)
+        items.value = item
         selectedCardIndex.value = index;
         console.log('index', index)
         if (index == 5) {
@@ -215,12 +191,12 @@ const cardControls = async (item, index) => {
     }
 
 }
-const getMenuItem = (item) => {
-  selectedCardIndex.value = -1;
-  console.log('products', products.value)
-  console.log('item', item)
-  filterProducts.value = products.value.filter(el => el.category == item.label);
-}
+// const getMenuItem = (item) => {
+//   selectedCardIndex.value = -1;
+//   console.log('products', products.value)
+//   console.log('item', item)
+//   filterProducts.value = products.value.filter(el => el.category == item.label);
+// }
 </script>
 <style>
 a.p-menuitem-link {

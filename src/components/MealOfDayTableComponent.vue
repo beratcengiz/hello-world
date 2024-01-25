@@ -4,7 +4,7 @@
         <div class="card p-3 mt-2">
             <Toolbar class="mb-4">
                 <template #start>
-                    <Button label="Yeni Ekle" icon="pi pi-plus" severity="success" class="mr-2" @click="openNew" />
+                    <!-- <Button label="Yeni Ekle" icon="pi pi-plus" severity="success" class="mr-2" @click="openNew" /> -->
                     <!-- <Button label="Delete" icon="pi pi-trash" severity="danger" @click="confirmDeleteSelected"
                         :disabled="!selectedProducts || !selectedProducts.length" /> -->
                 </template>
@@ -33,7 +33,7 @@
                 <Column field="name" header="Name" sortable style="min-width:16rem"></Column>
                 <Column header="Image">
                     <template #body="slotProps">
-                        <img :src="slotProps.data.image" :alt="slotProps.data.image" class="shadow-2 border-round"
+                        <img :src="slotProps.data.url" :alt="slotProps.data.url" class="shadow-2 border-round"
                             style="width: 64px" />
                     </template>
                 </Column>
@@ -51,8 +51,8 @@
                 <Column :exportable="false" style="min-width:8rem">
                     <template #body="slotProps">
                         <Button icon="pi pi-pencil" outlined rounded class="mr-2" @click="editProduct(slotProps.data)" />
-                        <Button icon="pi pi-trash" outlined rounded severity="danger"
-                            @click="confirmDeleteProduct(slotProps.data)" />
+                        <!-- <Button icon="pi pi-trash" outlined rounded severity="danger"
+                            @click="confirmDeleteProduct(slotProps.data)" /> -->
                     </template>
                 </Column>
             </DataTable>
@@ -73,7 +73,7 @@
 
             <div class="field">
                 <label for="inventoryStatus" class="mb-3">Resim Linki</label>
-                <InputText id="name" v-model.trim="product.image" required="true" autofocus />
+                <InputText id="name" v-model.trim="product.url" required="true" autofocus />
 
             </div>
 
@@ -152,13 +152,14 @@
 import { ref, onMounted } from 'vue';
 import { FilterMatchMode } from 'primevue/api';
 import { useToast } from 'primevue/usetoast';
+
 import axios from 'axios';
 onMounted(() => {
     // ProductService.getProducts().then((data) => (products.value = data));
     const getCardDetails = async () => {
         await axios
             .get(
-                "https://mock-data-5ynd.onrender.com/mealofday"
+                "https://berat.tostbang.com/api/MealOfDay"
             )
             .then((res) => {
                 console.log('res', res)
@@ -188,11 +189,11 @@ const formatCurrency = (value) => {
         return value.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
     return;
 };
-const openNew = () => {
-    product.value = {};
-    submitted.value = false;
-    productDialog.value = true;
-};
+// const openNew = () => {
+//     product.value = {};
+//     submitted.value = false;
+//     productDialog.value = true;
+// };
 const hideDialog = () => {
     productDialog.value = false;
     submitted.value = false;
@@ -200,23 +201,31 @@ const hideDialog = () => {
 const saveProduct = async () => {
     console.log(product.value)
     submitted.value = true;
+    // var json = {
+    //     "name": product.value.name,
+    //     "image": product.value.image,
+    //     "price": product.value.price,
+    //     "rating": 4.85,
+    //     "category": product.value.category,
+    //     "votes": 15,
+    //     "popular": true,
+    //     "description":product.value.description,
+    //     "available": true
+    // }
     var json = {
+        "id": 0,
         "name": product.value.name,
-        "image": product.value.image,
         "price": product.value.price,
-        "rating": 4.85,
         "category": product.value.category,
-        "votes": 15,
-        "popular": true,
-        "available": true
+        "url": product.value.url
     }
-    await axios.post("https://mock-data-5ynd.onrender.com/mealofday", json)
+    await axios.post("https://berat.tostbang.com/api/MealOfDay", json)
         .then(res => console.log('res', res)).catch(el => console.log('el', el))
     setTimeout(async () => {
         const getCardDetails = async () => {
             await axios
                 .get(
-                    "https://mock-data-5ynd.onrender.com/mealofday"
+                    "https://berat.tostbang.com/api/MealOfDay"
                 )
                 .then((res) => {
                     console.log('res', res)
@@ -230,20 +239,17 @@ const saveProduct = async () => {
 const editProducts = async () => {
     console.log('prod', product.value);
     console.log('products', products.value)
-    await axios.put(`https://mock-data-5ynd.onrender.com/mealofday/${product.value.id}`, product.value).then(res => {
-        console.log('res',res)
+    await axios.put(`https://berat.tostbang.com/api/MealOfDay/${product.value.id}`, product.value).then(res => {
+        console.log('res', res)
     }).catch((error) => console.log(error));
     products.value = products.value.map(el => {
         if (el.id == product.value.id) {
             var json = {
+                "id": 1,
                 "name": product.value.name,
-                "image": product.value.image,
                 "price": product.value.price,
-                "rating": 4.85,
                 "category": product.value.category,
-                "votes": 15,
-                "popular": true,
-                "available": true
+                "url": product.value.url
             }
             el = json;
         }
@@ -260,7 +266,7 @@ const editProduct = async (prod) => {
     //     "rating": 4.85,
     //     "category": product.value.category,
     //     "votes": 15,
-    //     "popular": true,
+    //     "popular": true,x
     //     "available": true
     // }
     // await axios.put(`https://shy-rose-armadillo-fez.cyclic.app/posts/${prod.id}`,prod).then(res => {
@@ -273,25 +279,45 @@ const editProduct = async (prod) => {
     // image.value = prod.image
     productDialog.value = true;
 };
-const confirmDeleteProduct = (prod) => {
-    product.value = prod;
-    deleteProductDialog.value = true;
-};
+// const confirmDeleteProduct = (prod) => {
+//     product.value = prod;
+//     deleteProductDialog.value = true;
+// };
 const deleteProduct = async () => {
-    await axios.delete(`https://mock-data-5ynd.onrender.com/mealofday/${product.value.id}`)
+    await axios.delete(`https://berat.tostbang.com/api/MealOfDay/${product.value.id}`)
         .then(res => {
-            console.log('res',res)
+            console.log('res', res)
         }).catch((error) => console.log(error));
     products.value = products.value.filter(val => val.id !== product.value.id);
     deleteProductDialog.value = false;
     product.value = {};
     toast.add({ severity: 'success', summary: 'Successful', detail: 'Product Deleted', life: 3000 });
 };
+// const findIndexById = (id) => {
+//     let index = -1;
+//     for (let i = 0; i < products.value.length; i++) {
+//         if (products.value[i].id === id) {
+//             index = i;
+//             break;
+//         }
+//     }
 
+//     return index;
+// };
+// const createId = () => {
+//     let id = '';
+//     var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+//     for (var i = 0; i < 5; i++) {
+//         id += chars.charAt(Math.floor(Math.random() * chars.length));
+//     }
+//     return id;
+// }
 const exportCSV = () => {
     dt.value.exportCSV();
 };
-
+// const confirmDeleteSelected = () => {
+//     deleteProductsDialog.value = true;
+// };
 const deleteSelectedProducts = () => {
     products.value = products.value.filter(val => !selectedProducts.value.includes(val));
     deleteProductsDialog.value = false;
@@ -299,6 +325,20 @@ const deleteSelectedProducts = () => {
     toast.add({ severity: 'success', summary: 'Successful', detail: 'Products Deleted', life: 3000 });
 };
 
+// const getStatusLabel = (status) => {
+//     switch (status) {
+//         case 'INSTOCK':
+//             return 'success';
 
+//         case 'LOWSTOCK':
+//             return 'warning';
+
+//         case 'OUTOFSTOCK':
+//             return 'danger';
+
+//         default:
+//             return null;
+//     }
+// };
 
 </script>
