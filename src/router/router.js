@@ -1,7 +1,9 @@
+/* eslint-disable */
 import { createRouter, createWebHistory } from 'vue-router';
 import HelloWorldVue from '@/components/HelloWorld.vue';
-import HelloDenemeVue from '@/components/HelloDeneme.vue';
-
+import HelloDeneme from '@/components/HelloDeneme.vue'
+import LoginPage from '@/components/LoginPage.vue';
+import AdminPage from '@/components/AdminPage.vue'
 
 const routes = [
     {
@@ -10,9 +12,14 @@ const routes = [
         component: HelloWorldVue,
     },
     {
-        path: '/das',
-        name: 'deneme', // '/das' rotası için benzersiz isim
-        component: HelloDenemeVue,
+        path: '/admin',
+        name: 'adminPage', // '/das' rotası için benzersiz isim
+        component: AdminPage,
+    },
+    {
+        path: '/login',
+        name: 'login', // '/das' rotası için benzersiz isim
+        component: HelloDeneme,
     },
 ];
 
