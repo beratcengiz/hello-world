@@ -36,10 +36,10 @@
             <div class="col-md-7">
                 <div class="row mr-2">
                     <div class="col-md-12">
-                        <TabMenu :model="items" class="mt-3" style="background-color: white;">
+                        <!-- <TabMenu :model="items" class="mt-3" style="background-color: white;">
                             <template #item="{ item, props, hasSubmenu, root }">
                                 <a v-ripple class="flex align-items-center" v-bind="props.action" style="color:black"
-                                    @click="getMenuItem(item)">
+                                    @click="getMenuItem(item,hasSubmenu,root)">
                                     <span :class="item.icon" />
                                     <span class="ml-2">{{ item.label }}</span>
                                     <Badge v-if="item.badge" :class="{ 'ml-auto': !root, 'ml-2': root }"
@@ -49,11 +49,11 @@
                                             item.shortcut }}</span>
                                     <i v-if="hasSubmenu"
                                         :class="['pi pi-angle-down text-primary', { 'pi-angle-down ml-2': root, 'pi-angle-right ml-auto': !root }]"></i>
-                                </a>
+                                        </a>
                             </template>
-                        </TabMenu>
+                        </TabMenu> -->
 
-                        <!-- <div class="card mt-3" >
+                        <div class="card mt-3" >
                           <Menubar :model="items">
                               <template #item="{ item, props, hasSubmenu, root }">
                                   <a v-ripple class="flex align-items-center" v-bind="props.action" style="color:black"
@@ -71,7 +71,7 @@
                               </template>
                           </Menubar>
                          
-                      </div> -->
+                      </div>
                     </div>
                     <div class="col-md-12" v-for="item in filterProducts" :key="item">
                         <div class="custom-scroll-container">
@@ -226,15 +226,21 @@ const getMenuItem = (item) => {
 a.p-menuitem-link {
     background-color: white !important;
 }
+/* .p-tabmenu .p-tabmenu-nav .p-tabmenuitem .p-menuitem-link {
+    border: none;
+} */
 
 .wallpaper-register {
     background: url('../assets/pexels-chevanon-photography-324028.jpg') no-repeat center center;
     background-size: cover;
-    height: 1200px;
+    height: 1000px;
     position: absolute;
     background-color: gray;
     width: 100%;
     z-index: -1;
+}
+.p-menuitem-link {
+    background-color: yellow !important;
 }
 
 .logo-img {
@@ -246,6 +252,9 @@ a.p-menuitem-link {
     .card {
         height: 89px;
         /* veya diğer uygun boyutlama seçenekleri */
+    }
+    .wallpaper-register {
+        height: auto;
     }
 
 }
