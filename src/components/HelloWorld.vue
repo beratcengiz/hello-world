@@ -34,7 +34,7 @@
             </div>
             <div class="col-md-1"></div>
             <div class="col-md-7">
-                <div class="row mr-2">
+                <div class="row mr-2 custom-scroll-container">
                     <div class="col-md-12">
                     </div>
                     <div class="col-md-12">
@@ -45,7 +45,7 @@
                         </Card>
                     </div>
                     <div class="col-md-12" v-for="item in filterProducts" :key="item">
-                        <div class="custom-scroll-container">
+                        <div>
                             <Card class="mt-2 opacity-80 " style="color:black;border: 1px solid grey;">
                                 <!-- <template #title> {{ item.category }} </template> -->
                                 <template #content>
@@ -209,7 +209,7 @@ a.p-menuitem-link {
 .wallpaper-register {
     background: url('../assets/pexels-chevanon-photography-324028.jpg') no-repeat center center;
     background-size: cover;
-    height: 1000px;
+    height: 900px;
     position: absolute;
     background-color: gray;
     width: 100%;
@@ -230,7 +230,7 @@ a.p-menuitem-link {
         /* veya diğer uygun boyutlama seçenekleri */
     }
     .wallpaper-register {
-        height: auto;
+        height: 2000px;
     }
 
 }
