@@ -34,7 +34,7 @@
             </div>
             <div class="col-md-1"></div>
             <div class="col-md-7">
-                <div class="row mr-2 custom-scroll-container">
+                <div class="row  custom-scroll-container">
                     <div class="col-md-12">
                     </div>
                     <div class="col-md-12">
@@ -44,11 +44,22 @@
                             </template>
                         </Card>
                     </div>
-                    <div class="col-md-12" v-for="item in filterProducts" :key="item">
-                        <div class="card mt-2" style="height: auto;">
+                    <div class="col-md-6" v-for="item in filterProducts" :key="item">
+                        <div class="card mt-2" style="height: auto;opacity: 0.7;">
                             <!-- <img :src="item.url" class="card-img-top" alt="..."> -->
                             <div class="card-body">
-                                <p class="card-text">{{ item }}</p>
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-12">
+                                        <img class="opacity-full" alt="user header" style="width: 150px;height: 150px;border-radius: 10%;"
+                                            :src="item.url" />
+                                    </div>
+                                    <div class="col-md-6 col-sm-12">
+                                        <!-- <p class="card-text">{{ item }}</p> -->
+                                        <p style="font-weight: bold;" class="mt-2">Ürün Bilgisi : {{ item.name }}</p>
+                                        <p style="font-weight: bold;">Kategori : {{ item.category }}</p>
+                                        <p style="font-weight: bold;color:green">Fiyat : {{ item.price }} TL </p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <!-- <div>
@@ -288,4 +299,5 @@ a.p-menuitem-link {
     /* Gri kaydırma kolunun rengi */
     border-radius: 50px;
     /* Yuvarlak köşeler */
-}</style>
+}
+</style>

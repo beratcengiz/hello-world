@@ -159,7 +159,7 @@ onMounted(() => {
     const getCardDetails = async () => {
         await axios
             .get(
-                "https://berat.tostbang.com/api/Products"
+                "https://avasin20240124173421.azurewebsites.net/api/Products"
             )
             .then((res) => {
                 console.log('res', res)
@@ -219,13 +219,13 @@ const saveProduct = async () => {
         "category": product.value.category,
         "url": product.value.url
     }
-    await axios.post("https://berat.tostbang.com/api/Products", json)
+    await axios.post("https://avasin20240124173421.azurewebsites.net/api/Products", json)
         .then(res => console.log('res', res)).catch(el => console.log('el', el))
     setTimeout(async () => {
         const getCardDetails = async () => {
             await axios
                 .get(
-                    "https://berat.tostbang.com/api/Products"
+                    "https://avasin20240124173421.azurewebsites.net/api/Products"
                 )
                 .then((res) => {
                     console.log('res', res)
@@ -239,7 +239,7 @@ const saveProduct = async () => {
 const editProducts = async () => {
     console.log('prod', product.value);
     console.log('products', products.value)
-    await axios.put(`https://berat.tostbang.com/api/Products/${product.value.id}`, product.value).then(res => {
+    await axios.put(`https://avasin20240124173421.azurewebsites.net/api/Products/${product.value.id}`, product.value).then(res => {
         console.log('res', res)
     }).catch((error) => console.log(error));
     products.value = products.value.map(el => {
@@ -284,7 +284,7 @@ const confirmDeleteProduct = (prod) => {
     deleteProductDialog.value = true;
 };
 const deleteProduct = async () => {
-    await axios.delete(`https://berat.tostbang.com/api/Products/${product.value.id}`)
+    await axios.delete(`https://avasin20240124173421.azurewebsites.net/api/Products/${product.value.id}`)
         .then(res => {
             console.log('res', res)
         }).catch((error) => console.log(error));
