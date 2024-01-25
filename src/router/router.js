@@ -4,6 +4,7 @@ import HelloWorldVue from '@/components/HelloWorld.vue';
 import HelloDeneme from '@/components/HelloDeneme.vue'
 import LoginPage from '@/components/LoginPage.vue';
 import AdminPage from '@/components/AdminPage.vue'
+import MealOfDay from '@/components/MealOfDayPage.vue'
 
 const routes = [
     {
@@ -20,6 +21,11 @@ const routes = [
         path: '/login',
         name: 'login', // '/das' rotası için benzersiz isim
         component: HelloDeneme,
+    },
+    {
+        path: '/mealoftheday',
+        name: 'mealofday', // '/das' rotası için benzersiz isim
+        component: MealOfDay,
     },
 ];
 
