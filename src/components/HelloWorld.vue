@@ -40,14 +40,19 @@
                     <div class="col-md-12">
                         <Card class="mt-2 opacity-80 d-flex justify-content-center">
                             <template #content>
-                                <h5>{{ items.label}}</h5>
+                                <h5>{{ items.label }}</h5>
                             </template>
                         </Card>
                     </div>
                     <div class="col-md-12" v-for="item in filterProducts" :key="item">
-                        <div>
+                        <div class="card mt-2" style="height: auto;">
+                            <!-- <img :src="item.url" class="card-img-top" alt="..."> -->
+                            <div class="card-body">
+                                <p class="card-text">{{ item }}</p>
+                            </div>
+                        </div>
+                        <!-- <div>
                             <Card class="mt-2 opacity-80 " style="color:black;border: 1px solid grey;">
-                                <!-- <template #title> {{ item.category }} </template> -->
                                 <template #content>
                                     <div class="d-flex">
                                         <img class="opacity-full" alt="user header" style="width: 150px;height: 150px;"
@@ -68,7 +73,7 @@
                                     </div>
                                 </template>
                             </Card>
-                        </div>
+                        </div> -->
 
                     </div>
                 </div>
@@ -87,7 +92,7 @@ const a = ref([])
 onMounted(async () => {
     await getProducts();
     filterProducts.value = products.value.filter(el => el.category == 'Sıcak İçecekler');
-    items.value = {label:'Sıcak İçecekler'}
+    items.value = { label: 'Sıcak İçecekler' }
 })
 const getMealOfDay = async () => {
     await axios
@@ -138,6 +143,7 @@ const getProducts = async () => {
 //         icon: 'pi pi-star'
 //     },
 // ]);
+
 const list = ref([
     {
         label: 'Sıcak İçecekler',
@@ -166,9 +172,9 @@ const list = ref([
 
 ])
 const cardControls = async (item, index) => {
-    
+
     if (item == 'Nargile') {
-        items.value = {label:'Nargile'}
+        items.value = { label: 'Nargile' }
         selectedCardIndex.value = 6;
         filterProducts.value = products.value.filter(el => el.category == item);
     } else {
@@ -199,9 +205,15 @@ const cardControls = async (item, index) => {
 // }
 </script>
 <style>
+.images {
+    width: 300px;
+    height: 175px;
+}
+
 a.p-menuitem-link {
     background-color: white !important;
 }
+
 /* .p-tabmenu .p-tabmenu-nav .p-tabmenuitem .p-menuitem-link {
     border: none;
 } */
@@ -215,6 +227,7 @@ a.p-menuitem-link {
     width: 100%;
     z-index: -1;
 }
+
 .p-menuitem-link {
     background-color: yellow !important;
 }
@@ -229,8 +242,14 @@ a.p-menuitem-link {
         height: 89px;
         /* veya diğer uygun boyutlama seçenekleri */
     }
+
     .wallpaper-register {
         height: 2000px;
+    }
+
+    .images {
+        width: 100px;
+        height: 75px;
     }
 
 }
@@ -269,5 +288,4 @@ a.p-menuitem-link {
     /* Gri kaydırma kolunun rengi */
     border-radius: 50px;
     /* Yuvarlak köşeler */
-}
-</style>
+}</style>
