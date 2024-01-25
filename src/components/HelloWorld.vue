@@ -209,7 +209,7 @@ a.p-menuitem-link {
 .wallpaper-register {
     background: url('../assets/pexels-chevanon-photography-324028.jpg') no-repeat center center;
     background-size: cover;
-    height: 900px;
+    /* height: 900px; */
     position: absolute;
     background-color: gray;
     width: 100%;
@@ -258,14 +258,14 @@ a.p-menuitem-link {
 
 .custom-scroll-container::-webkit-scrollbar {
     width: 10px;
-    background-color: #d3d3d3;
+    background-color: black;
     /* Gri arka plan rengi */
     border-radius: 50px;
     /* Yuvarlak köşeler */
 }
 
 .custom-scroll-container::-webkit-scrollbar-thumb {
-    background-color: #fdf9f9;
+    background-color: #DDF2FD;
     /* Gri kaydırma kolunun rengi */
     border-radius: 50px;
     /* Yuvarlak köşeler */
