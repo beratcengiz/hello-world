@@ -35,7 +35,7 @@
           <div class="col-md-1"></div>
           <div class="col-md-7">
               <div class="row mr-2">
-                  <!-- <div class="col-md-12">
+                  <div class="col-md-12">
                       <div class="card mt-3" >
                           <Menubar :model="items">
                               <template #item="{ item, props, hasSubmenu, root }">
@@ -54,7 +54,7 @@
                               </template>
                           </Menubar>
                       </div>
-                  </div> -->
+                  </div>
                   <div class="col-md-12" v-for="item in filterProducts" :key="item">
                       <div class="custom-scroll-container">
                           <Card class="mt-2 opacity-80 " style="color:black;border: 1px solid grey;">
@@ -121,32 +121,32 @@ const getProducts = async () => {
       })
       .catch((error) => console.log(error));
 };
-// const items = ref([
-//   {
-//       label: 'Sıcak İçecekler',
-//       icon: 'pi pi-home'
-//   },
-//   {
-//       label: 'Soğuk İçecekler',
-//       icon: 'pi pi-star'
-//   },
-//   {
-//       label: 'Atıştırmalıklar',
-//       icon: 'pi pi-home'
-//   },
-//   {
-//       label: 'Tatlılar',
-//       icon: 'pi pi-star'
-//   },
-//   {
-//       label: 'Nargile',
-//       icon: 'pi pi-star'
-//   },
-//   {
-//       label: "Yemekler",
-//       icon: 'pi pi-star'
-//   },
-// ]);
+const items = ref([
+  {
+      label: 'Sıcak İçecekler',
+      icon: 'pi pi-home'
+  },
+  {
+      label: 'Soğuk İçecekler',
+      icon: 'pi pi-star'
+  },
+  {
+      label: 'Atıştırmalıklar',
+      icon: 'pi pi-home'
+  },
+  {
+      label: 'Tatlılar',
+      icon: 'pi pi-star'
+  },
+  {
+      label: 'Nargile',
+      icon: 'pi pi-star'
+  },
+  {
+      label: "Yemekler",
+      icon: 'pi pi-star'
+  },
+]);
 const list = ref([
   {
       label: 'Sıcak İçecekler',
@@ -197,12 +197,12 @@ const cardControls = async (item, index) => {
   }
 
 }
-// const getMenuItem = (item) => {
-//   selectedCardIndex.value = -1;
-//   console.log('products', products.value)
-//   console.log('item', item)
-//   filterProducts.value = products.value.filter(el => el.category == item.label);
-// }
+const getMenuItem = (item) => {
+  selectedCardIndex.value = -1;
+  console.log('products', products.value)
+  console.log('item', item)
+  filterProducts.value = products.value.filter(el => el.category == item.label);
+}
 </script>
 <style>
 .wallpaper-register {
