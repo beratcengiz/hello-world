@@ -19,8 +19,9 @@
                                 style="width: 100%;height: 300px;">
                             <div class="d-flex justify-content-center align-items-center">
                                 <div class="card-title text-dark" style="font-weight: bold;" v-if="item.adress">
-                                    <p>Adres : {{ item.adress }}</p>
-                                    <p>Tel : {{ item.tel }}</p>
+                                    <p><i class="pi pi-home" style="color: green"></i> Adres : {{ item.adress }}</p>
+                                    <p class="mt-4" @click="goInsta()"><i class="pi pi-instagram" style="color: green"></i> İnstagram : {{ item.insta }}</p>
+                                    <p class="mt-4"><i class="pi pi-mobile" style="color: green"></i> Tel : {{ item.tel }}</p>
                                 </div>
                                 <!-- <h5 class="card-title text-dark" style="font-weight: bold;" >{{ item.label }}</h5> -->
                                 <!-- <p >{{ item }}</p> -->
@@ -110,6 +111,9 @@ onMounted(async () => {
     filterProducts.value = products.value.filter(el => el.category == 'Sıcak İçecekler');
     items.value = { label: 'Sıcak İçecekler' }
 })
+const goInsta = () => {
+    window.location.href = "https://www.instagram.com/villaavasinhookah/";
+}
 const getMealOfDay = async () => {
     await axios
         .get(
@@ -220,7 +224,8 @@ const list = ref([
         label: 'İletişim',
         icon: 'pi pi-star',
         adress: ' Peyas, Diclekent Villaları, 252. Sk. No:35, 21100 Kayapınar/Diyarbakır',
-        tel: '0552 409 98 91'
+        tel: '0552 409 98 91',
+        insta : "https://www.instagram.com/villaavasinhookah/"
     },
 
 ])
