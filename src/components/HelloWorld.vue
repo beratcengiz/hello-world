@@ -15,7 +15,8 @@
                     <div class="col-md-12 col-sm-12 col-lg-6" v-for="(item, index) in list" :key="index"
                         style="cursor: pointer;">
                         <div class="card  text-white mt-2" v-if="item.adress" style="height: auto;">
-                            <img v-if="item.image" :src="item.image" class="card-img" alt="..." style="width: 100%;height: 300px;">
+                            <img v-if="item.image" :src="item.image" class="card-img" alt="..."
+                                style="width: 100%;height: 300px;">
                             <div class="d-flex justify-content-center align-items-center">
                                 <div class="card-title text-dark" style="font-weight: bold;" v-if="item.adress">
                                     <p>Adres : {{ item.adress }}</p>
@@ -26,7 +27,8 @@
                             </div>
                         </div>
                         <div class="card  text-white mt-2" v-else @click="cardControls(item, index)" style="height: auto;">
-                            <img v-if="item.image" :src="item.image" class="card-img" alt="..." style="width: 100%;height: 300px;">
+                            <img v-if="item.image" :src="item.image" class="card-img" alt="..."
+                                style="width: 100%;height: 300px;">
                             <div class="d-flex justify-content-center align-items-center">
                                 <h5 class="card-title text-dark" style="font-weight: bold;">{{ item.label }}</h5>
                                 <!-- <p >{{ item }}</p> -->
@@ -46,11 +48,13 @@
                 <div class="card" style="background-color: #DDF2FD;">
                     <div class="row">
                         <div class="col-md-4 col-lg-4">
-                        <label  @click="pageControl = 'category'" style="border-bottom:1px solid green;cursor: pointer;:hover(color: green;)">Anasayfaya Git</label>
-                    </div>
-                    <div class="col-md-4 col-lg-4 d-flex justify-content-center">
-                        <h5>{{ items.label }}</h5>
-                    </div>
+                            <label @click="pageControl = 'category'"
+                                style="border-bottom:1px solid green;cursor: pointer;:hover(color: green;)">Anasayfaya
+                                Git</label>
+                        </div>
+                        <div class="col-md-4 col-lg-4 d-flex justify-content-center">
+                            <h5>{{ items.label }}</h5>
+                        </div>
                     </div>
                 </div>
                 <!-- <Card class="mt-2 d-flex justify-content-center" style="background-color:#DDF2FD;">
@@ -215,8 +219,8 @@ const list = ref([
     {
         label: 'İletişim',
         icon: 'pi pi-star',
-        adress : ' Peyas, Diclekent Villaları, 252. Sk. No:35, 21100 Kayapınar/Diyarbakır',
-        tel : '0552 409 98 91'
+        adress: ' Peyas, Diclekent Villaları, 252. Sk. No:35, 21100 Kayapınar/Diyarbakır',
+        tel: '0552 409 98 91'
     },
 
 ])
@@ -231,6 +235,12 @@ const cardControls = async (item, index) => {
     } else {
         filterProducts.value = products.value.filter(el => el.category == item.label);
         // filterProducts.value = products.value
+    }
+    if (window.innerWidth < 600) {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
     }
     // if (item == 'Nargile') {
     //     items.value = { label: 'Nargile' }
@@ -359,5 +369,4 @@ a.p-menuitem-link {
     /* Gri kaydırma kolunun rengi */
     border-radius: 50px;
     /* Yuvarlak köşeler */
-}
-</style>
+}</style>
