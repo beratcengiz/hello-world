@@ -183,11 +183,14 @@ const list = ref([
 
 ])
 const cardControls = async (item, index) => {
-
+    console.log(item)
     if (item == 'Nargile') {
         items.value = { label: 'Nargile' }
         selectedCardIndex.value = 6;
         filterProducts.value = products.value.filter(el => el.category == item);
+    } else if(item.label == "İletişim") {
+        items.value = { label: 'Peyas, Diclekent Villaları, 252. Sk. No:35, 21100 Kayapınar/Diyarbakır, Telefon : 0552 409 98 91' }
+        filterProducts.value = []
     } else {
         console.log('cardElement', index)
         items.value = item

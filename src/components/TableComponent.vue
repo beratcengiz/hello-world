@@ -217,6 +217,7 @@ const saveProduct = async () => {
         "name": product.value.name,
         "price": product.value.price,
         "category": product.value.category,
+        "description" : product.value.description,
         "url": product.value.url
     }
     await axios.post("https://avasin20240124173421.azurewebsites.net/api/Products", json)
@@ -249,6 +250,7 @@ const editProducts = async () => {
                 "name": product.value.name,
                 "price": product.value.price,
                 "category": product.value.category,
+                "description" : product.value.description,
                 "url": product.value.url
             }
             el = json;
