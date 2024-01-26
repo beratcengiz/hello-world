@@ -4,14 +4,14 @@
         <div class="card p-3 mt-2">
             <Toolbar class="mb-4">
                 <template #start>
-                    <!-- <Button label="Yeni Ekle" icon="pi pi-plus" severity="success" class="mr-2" @click="openNew" /> -->
+                    <Button label="Yeni Ekle" icon="pi pi-plus" severity="success" class="mr-2" @click="openNew" />
                     <!-- <Button label="Delete" icon="pi pi-trash" severity="danger" @click="confirmDeleteSelected"
                         :disabled="!selectedProducts || !selectedProducts.length" /> -->
                 </template>
 
                 <template #end>
                     <!-- <FileUpload mode="basic" accept="image/*" :maxFileSize="1000000" label="Import" chooseLabel="Import" class="mr-2 inline-block" /> -->
-                    <Button label="Excel Çıktısı Al" icon="pi pi-upload" severity="help" @click="exportCSV($event)" />
+                    <!-- <Button label="Excel Çıktısı Al" icon="pi pi-upload" severity="help" @click="exportCSV($event)" /> -->
                 </template>
             </Toolbar>
 
@@ -51,8 +51,8 @@
                 <Column :exportable="false" style="min-width:8rem">
                     <template #body="slotProps">
                         <Button icon="pi pi-pencil" outlined rounded class="mr-2" @click="editProduct(slotProps.data)" />
-                        <!-- <Button icon="pi pi-trash" outlined rounded severity="danger"
-                            @click="confirmDeleteProduct(slotProps.data)" /> -->
+                        <Button icon="pi pi-trash" outlined rounded severity="danger"
+                            @click="confirmDeleteProduct(slotProps.data)" />
                     </template>
                 </Column>
             </DataTable>
@@ -77,36 +77,6 @@
 
             </div>
 
-            <!-- <div class="field">
-                <label class="mb-3">Category</label>
-                <div class="formgrid grid">
-                    <div class="field-radiobutton col-6">
-                        <RadioButton id="category1" name="category" value="Sıcak İçecekler" v-model="product.category" />
-                        <label for="category1">Sıcak İçecekler</label>
-                    </div>
-                    <div class="field-radiobutton col-6">
-                        <RadioButton id="category2" name="category" value="Soğuk İçecekler" v-model="product.category" />
-                        <label for="category2">Soğuk İçecekler</label>
-                    </div>
-                    <div class="field-radiobutton col-6">
-                        <RadioButton id="category3" name="category" value="Atıştırmalıklar" v-model="product.category" />
-                        <label for="category3">Atıştırmalıklar</label>
-                    </div>
-                    <div class="field-radiobutton col-6">
-                        <RadioButton id="category4" name="category" value="Tatlılar" v-model="product.category" />
-                        <label for="category4">Tatlılar</label>
-                    </div>
-                    <div class="field-radiobutton col-6">
-                        <RadioButton id="category4" name="category" value="Nargile" v-model="product.category" />
-                        <label for="category4">Nargile</label>
-                    </div>
-                    <div class="field-radiobutton col-6">
-                        <RadioButton id="category4" name="category" value="Yemekler" v-model="product.category" />
-                        <label for="category4">Yemekler</label>
-                    </div>
-                </div>
-            </div> -->
-
             <div class="formgrid grid">
                 <div class="field col">
                     <label for="price">Price</label>
@@ -119,8 +89,8 @@
             </div>
             <template #footer>
                 <Button label="Cancel" icon="pi pi-times" text @click="hideDialog" />
-                <Button label="Save" icon="pi pi-check" text @click="saveProduct" />
-                <Button label="Güncelle" icon="pi pi-check" text @click="editProducts" />
+                <Button label="Ekle" icon="pi pi-check" text @click="saveProduct" v-if="buttonControl == 1" />
+                <Button label="Güncelle" icon="pi pi-check" text @click="editProducts" v-if="buttonControl == 2" />
             </template>
         </Dialog>
 
@@ -151,26 +121,16 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { FilterMatchMode } from 'primevue/api';
-import { useToast } from 'primevue/usetoast';
+import { toast } from 'vue3-toastify';
+import 'vue3-toastify/dist/index.css';
 
 import axios from 'axios';
 onMounted(() => {
     // ProductService.getProducts().then((data) => (products.value = data));
-    const getCardDetails = async () => {
-        await axios
-            .get(
-                "https://avasin20240124173421.azurewebsites.net/api/MealOfDay"
-            )
-            .then((res) => {
-                console.log('res', res)
-                products.value = res.data;
-            })
-            .catch((error) => console.log(error));
-    };
+
     getCardDetails()
 });
 
-const toast = useToast();
 const dt = ref();
 const products = ref();
 const productDialog = ref(false);
@@ -178,22 +138,34 @@ const deleteProductDialog = ref(false);
 const deleteProductsDialog = ref(false);
 const product = ref({});
 const selectedProducts = ref();
+const buttonControl = ref(1)
 const filters = ref({
     'global': { value: null, matchMode: FilterMatchMode.CONTAINS },
 });
 const submitted = ref(false);
 
-
+const getCardDetails = async () => {
+    await axios
+        .get(
+            "https://avasin20240124173421.azurewebsites.net/api/MealOfDay"
+        )
+        .then((res) => {
+            console.log('res', res)
+            products.value = res.data;
+        })
+        .catch((error) => console.log(error));
+};
 const formatCurrency = (value) => {
     if (value)
         return value.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
     return;
 };
-// const openNew = () => {
-//     product.value = {};
-//     submitted.value = false;
-//     productDialog.value = true;
-// };
+const openNew = () => {
+    buttonControl.value = 1
+    product.value = {};
+    submitted.value = false;
+    productDialog.value = true;
+};
 const hideDialog = () => {
     productDialog.value = false;
     submitted.value = false;
@@ -201,64 +173,60 @@ const hideDialog = () => {
 const saveProduct = async () => {
     console.log(product.value)
     submitted.value = true;
-    // var json = {
-    //     "name": product.value.name,
-    //     "image": product.value.image,
-    //     "price": product.value.price,
-    //     "rating": 4.85,
-    //     "category": product.value.category,
-    //     "votes": 15,
-    //     "popular": true,
-    //     "description":product.value.description,
-    //     "available": true
-    // }
     var json = {
         "id": 0,
         "name": product.value.name,
         "price": product.value.price,
         "category": product.value.category,
+        "description": product.value.description,
         "url": product.value.url
     }
     await axios.post("https://avasin20240124173421.azurewebsites.net/api/MealOfDay", json)
-        .then(res => console.log('res', res)).catch(el => console.log('el', el))
-    setTimeout(async () => {
-        const getCardDetails = async () => {
-            await axios
-                .get(
-                    "https://avasin20240124173421.azurewebsites.net/api/MealOfDay"
-                )
-                .then((res) => {
-                    console.log('res', res)
-                    products.value = res.data;
-                })
-                .catch((error) => console.log(error));
-        };
-        await getCardDetails();
-    }, 1000);
+        .then(async (res) => {
+            console.log('res', res)
+            await getCardDetails();
+            productDialog.value = false;
+            toast("Ürün eklendi !", {
+                autoClose: 1000,
+            }); // ToastOptions
+        })
+        .catch(el => {
+            console.log('el', el)
+            toast("Ürün eklenemedi !", {
+                autoClose: 1000,
+            }); // ToastOptions
+        })
+    // setTimeout(async () => {
+    //     const getCardDetails = async () => {
+    //         await axios
+    //             .get(
+    //                 "https://avasin20240124173421.azurewebsites.net/api/MealOfDay"
+    //             )
+    //             .then((res) => {
+    //                 console.log('res', res)
+    //                 products.value = res.data;
+    //             })
+    //             .catch((error) => console.log(error));
+    //     };
+    //     await getCardDetails();
+    // }, 1000);
 };
 const editProducts = async () => {
+    
     console.log('prod', product.value);
     console.log('products', products.value)
-    await axios.put(`https://avasin20240124173421.azurewebsites.net/api/MealOfDay/${product.value.id}`, product.value).then(res => {
+    await axios.put(`https://avasin20240124173421.azurewebsites.net/api/MealOfDay/${product.value.id}`, product.value).then(async (res) => {
         console.log('res', res)
+        await getCardDetails();
+        productDialog.value = false;
+        toast("Ürün güncellendi !", {
+            autoClose: 1000,
+        }); // ToastOptions
     }).catch((error) => console.log(error));
-    products.value = products.value.map(el => {
-        if (el.id == product.value.id) {
-            var json = {
-                "id": 1,
-                "name": product.value.name,
-                "price": product.value.price,
-                "description": product.value.description,
-                "url": product.value.url
-            }
-            el = json;
-        }
-        return el;
-    })
-    toast.add({ severity: 'success', summary: 'Successful', detail: 'Product Created', life: 3000 });
 }
 const editProduct = async (prod) => {
     console.log('prod', prod)
+    buttonControl.value = 2
     // var json = {
     //     "name": product.value.name,
     //     "image": image.value,
@@ -279,19 +247,23 @@ const editProduct = async (prod) => {
     // image.value = prod.image
     productDialog.value = true;
 };
-// const confirmDeleteProduct = (prod) => {
-//     product.value = prod;
-//     deleteProductDialog.value = true;
-// };
+const confirmDeleteProduct = (prod) => {
+    product.value = prod;
+    deleteProductDialog.value = true;
+};
 const deleteProduct = async () => {
     await axios.delete(`https://avasin20240124173421.azurewebsites.net/api/MealOfDay/${product.value.id}`)
         .then(res => {
             console.log('res', res)
+            toast("Ürün silindi !", {
+                autoClose: 1000,
+            }); // ToastOptions
         }).catch((error) => console.log(error));
     products.value = products.value.filter(val => val.id !== product.value.id);
     deleteProductDialog.value = false;
     product.value = {};
-    toast.add({ severity: 'success', summary: 'Successful', detail: 'Product Deleted', life: 3000 });
+
+    // toast.add({ severity: 'success', summary: 'Successful', detail: 'Product Deleted', life: 3000 });
 };
 // const findIndexById = (id) => {
 //     let index = -1;
@@ -312,9 +284,9 @@ const deleteProduct = async () => {
 //     }
 //     return id;
 // }
-const exportCSV = () => {
-    dt.value.exportCSV();
-};
+// const exportCSV = () => {
+//     dt.value.exportCSV();
+// };
 // const confirmDeleteSelected = () => {
 //     deleteProductsDialog.value = true;
 // };
