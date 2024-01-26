@@ -72,11 +72,13 @@
                 <div class="card mt-2" style="height: auto;box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;">
                     <div class="card-body">
                         <div class="row bg-white">
-                            <div class="col-md-4 col-sm-12">
+                            <div class="col-md-4 col-lg-4 col-sm-12 col-sm-12">
                                 <img class="opacity-full" alt="user header"
                                     style="width: 150px;height: 150px;border-radius: 10%;" :src="item.url" />
                             </div>
-                            <div class="col-md-6 col-sm-12">
+                            <div class="col-md-2 col-lg-2 col-sm-12">
+                            </div>
+                            <div class="col-md-6 col-lg-6 col-sm-12">
                                 <p style="font-weight: bold;" class="mt-2">Ürün Bilgisi : {{ item.name }}</p>
                                 <p style="font-weight: bold;">Kategori : {{ item.category }}</p>
                                 <p style="font-weight: bold;">Açıklama : {{ item.description }}</p>
