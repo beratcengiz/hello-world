@@ -44,12 +44,12 @@
                             </template>
                         </Card>
                     </div>
-                    <div class="col-md-6" v-for="item in filterProducts" :key="item">
+                    <div class="col-md-12" v-for="item in filterProducts" :key="item">
                         <div class="card mt-2" style="height: auto;opacity: 0.7;">
                             <!-- <img :src="item.url" class="card-img-top" alt="..."> -->
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col-md-6 col-sm-12">
+                                    <div class="col-md-4 col-sm-12">
                                         <img class="opacity-full" alt="user header" style="width: 150px;height: 150px;border-radius: 10%;"
                                             :src="item.url" />
                                     </div>

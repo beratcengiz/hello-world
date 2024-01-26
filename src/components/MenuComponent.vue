@@ -9,9 +9,9 @@
                         <span class="ml-2">{{ item.label }}</span>
                     </a>
                 </router-link>
-                <a v-else v-ripple :href="item.url" :target="item.target" v-bind="props.action">
+                <a v-else v-ripple :href="item.url" :target="item.target" v-bind="props.action" @click="handleItemClick(item)" >
                     <span :class="item.icon" />
-                    <span class="ml-2">{{ item.label }}</span>
+                    <span class="ml-2" >{{ item.label }}</span>
                 </a>
             </template>
         </Menubar>
@@ -21,6 +21,7 @@
 <script setup>
 import { ref } from "vue";
 import Menubar from 'primevue/menubar';
+import router from "@/router/router";
 import 'primeicons/primeicons.css'
 const items = ref([
     {
@@ -36,13 +37,15 @@ const items = ref([
     {
         label: 'Çıkış Yap',
         icon: 'pi pi-exit',
-        route : '/'
+        // route : '/'
     },
 ]);
-// const navigate = () => {
-//     alert('selam')
-// }
-// const handleItemClick = (event) => {
-//     console.log('Tıklanan öğe:', event.item);
-// }
+
+const handleItemClick = (item) => {
+    console.log('Tıklanan öğe:', event);
+    localStorage.clear();
+    if(item.label == "Çıkış Yap") {
+        router.push('/')
+    }
+}
 </script>
