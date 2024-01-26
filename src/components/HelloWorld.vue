@@ -48,10 +48,10 @@
                         <div class="card mt-2" style="height: auto;opacity: 0.7;">
                             <!-- <img :src="item.url" class="card-img-top" alt="..."> -->
                             <div class="card-body">
-                                <div class="row">
+                                <div class="row bg-white">
                                     <div class="col-md-4 col-sm-12">
-                                        <img class="opacity-full" alt="user header" style="width: 150px;height: 150px;border-radius: 10%;"
-                                            :src="item.url" />
+                                        <img class="opacity-full" alt="user header"
+                                            style="width: 150px;height: 150px;border-radius: 10%;" :src="item.url" />
                                     </div>
                                     <div class="col-md-6 col-sm-12">
                                         <!-- <p class="card-text">{{ item }}</p> -->
@@ -239,6 +239,10 @@ a.p-menuitem-link {
     z-index: -1;
 }
 
+/* .row {
+    background-color: white;
+} */
+
 .p-menuitem-link {
     background-color: yellow !important;
 }
@@ -255,12 +259,25 @@ a.p-menuitem-link {
     }
 
     .wallpaper-register {
-        height: 2000px;
+        background-color: black;
+        height: 0px;
     }
+
+    .custom-scroll-container {
+    overflow-y: hidden;
+}
+
+.custom-scroll-container::-webkit-scrollbar {
+    display: none;
+}
 
     .images {
         width: 100px;
         height: 75px;
+    }
+
+    .row {
+        background-color: black;
     }
 
 }
