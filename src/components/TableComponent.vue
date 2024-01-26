@@ -81,6 +81,34 @@
                 <label class="mb-3">Category</label>
                 <div class="formgrid grid">
                     <div class="field-radiobutton col-6">
+                        <RadioButton id="category1" name="category" value="Kahvaltı" v-model="product.category" />
+                        <label for="category1">Kahvaltı</label>
+                    </div>
+                    <div class="field-radiobutton col-6">
+                        <RadioButton id="category1" name="category" value="Atıştırmalıklar" v-model="product.category" />
+                        <label for="category1">Atıştırmalıklar</label>
+                    </div>
+                    <div class="field-radiobutton col-6">
+                        <RadioButton id="category1" name="category" value="Tatlılar" v-model="product.category" />
+                        <label for="category1">Tatlılar</label>
+                    </div>
+                    <div class="field-radiobutton col-6">
+                        <RadioButton id="category1" name="category" value="Salatalar" v-model="product.category" />
+                        <label for="category1">Salatalar</label>
+                    </div>
+                    <div class="field-radiobutton col-6">
+                        <RadioButton id="category1" name="category" value="Makarnalar" v-model="product.category" />
+                        <label for="category1">Makarnalar</label>
+                    </div>
+                    <div class="field-radiobutton col-6">
+                        <RadioButton id="category1" name="category" value="Kırmızı Etler" v-model="product.category" />
+                        <label for="category1">Kırmızı Etler</label>
+                    </div>
+                    <div class="field-radiobutton col-6">
+                        <RadioButton id="category1" name="category" value="Beyaz Etler" v-model="product.category" />
+                        <label for="category1">Beyaz Etler</label>
+                    </div>
+                    <div class="field-radiobutton col-6">
                         <RadioButton id="category1" name="category" value="Sıcak İçecekler" v-model="product.category" />
                         <label for="category1">Sıcak İçecekler</label>
                     </div>
@@ -97,8 +125,8 @@
                         <label for="category4">Tatlılar</label>
                     </div>
                     <div class="field-radiobutton col-6">
-                        <RadioButton id="category4" name="category" value="Nargile" v-model="product.category" />
-                        <label for="category4">Nargile</label>
+                        <RadioButton id="category4" name="category" value="Nargileler" v-model="product.category" />
+                        <label for="category4">Nargileler</label>
                     </div>
                     <div class="field-radiobutton col-6">
                         <RadioButton id="category4" name="category" value="Yemekler" v-model="product.category" />

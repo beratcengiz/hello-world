@@ -1,7 +1,7 @@
 <template>
-    <div class="container-fluid wallpaper-register">
-        <div class="row">
-            <div class="col-md-4 d-flex flex-column">
+    <div class="container-fluid">
+        <div class="row" v-if="pageControl == 'category'">
+            <div class="col-md-12 d-flex flex-column">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="card mt-3" style="background-color: #DDF2FD;">
@@ -14,78 +14,50 @@
                     </div>
                     <div class="col-md-12 col-sm-12 col-lg-6" v-for="(item, index) in list" :key="index"
                         style="cursor: pointer;">
-                        <div class="card mt-3"
-                            :class="{ 'selected-card': index === selectedCardIndex, 'card-color': index !== selectedCardIndex }"
-                            @click="cardControls(item, index)">
-                            <div class="card-body text-center" :id="item.id">
-                                <h6>{{ item.label }}</h6>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <div class="card mt-3 card-color" style="cursor: pointer;"
-                            :class="{ 'selected-card': selectedCardIndex === 6, 'card-color': selectedCardIndex !== 6 }">
-                            <div class="card-body text-center " @click="cardControls('Nargile')">
-                                <h6>Nargile</h6>
+                        <div class="card  text-white mt-2" @click="cardControls(item, index)" style="height: auto;">
+                            <img :src="item.image" class="card-img" alt="..." style="width: 100%;height: 300px;">
+                            <div class="d-flex justify-content-center align-items-center">
+                                <h5 class="card-title text-dark" style="font-weight: bold;">{{ item.label }}</h5>
+                                <!-- <p class="card-text text-dark">This is a wider card with supporting text below as a natural
+                                    lead-in to
+                                    additional content. This content is a little bit longer.</p>
+                                <p class="card-text">Last updated 3 mins ago</p> -->
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-1"></div>
-            <div class="col-md-7">
-                <div class="row  custom-scroll-container">
-                    <div class="col-md-12">
-                    </div>
-                    <div class="col-md-12">
-                        <Card class="mt-2 opacity-80 d-flex justify-content-center">
-                            <template #content>
-                                <h5>{{ items.label }}</h5>
-                            </template>
-                        </Card>
-                    </div>
-                    <div class="col-md-12" v-for="item in filterProducts" :key="item">
-                        <div class="card mt-2" style="height: auto;opacity: 0.7;">
-                            <!-- <img :src="item.url" class="card-img-top" alt="..."> -->
-                            <div class="card-body">
-                                <div class="row bg-white">
-                                    <div class="col-md-4 col-sm-12">
-                                        <img class="opacity-full" alt="user header"
-                                            style="width: 150px;height: 150px;border-radius: 10%;" :src="item.url" />
-                                    </div>
-                                    <div class="col-md-6 col-sm-12">
-                                        <!-- <p class="card-text">{{ item }}</p> -->
-                                        <p style="font-weight: bold;" class="mt-2">Ürün Bilgisi : {{ item.name }}</p>
-                                        <p style="font-weight: bold;">Kategori : {{ item.category }}</p>
-                                        <p style="font-weight: bold;color:green">Fiyat : {{ item.price }} TL </p>
-                                    </div>
-                                </div>
+        </div>
+        <div class="row" v-else>
+            <!-- <Card class="mt-2 d-flex justify-content-center">
+                <template #content>
+                    <h5>{{ items.label }}</h5>
+                </template>
+            </Card> -->
+            <div class="col-md-12">
+                <Card class="mt-2 d-flex justify-content-center" style="background-color:#DDF2FD;">
+                    <template #content>
+                        <h5>{{ items.label }}</h5>
+                        <button class="btn btn-success" style="position: absolute;right: 25px;top: 25px;"
+                            @click="pageControl = 'category'">Anasayfaya Git</button>
+                    </template>
+                </Card>
+            </div>
+            <div class="col-md-12 col-sm-12 col-lg-4 d-flex flex-column" v-for="item in filterProducts" :key="item">
+                <div class="card mt-2" style="height: auto;box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;">
+                    <div class="card-body">
+                        <div class="row bg-white">
+                            <div class="col-md-4 col-sm-12">
+                                <img class="opacity-full" alt="user header"
+                                    style="width: 150px;height: 150px;border-radius: 10%;" :src="item.url" />
+                            </div>
+                            <div class="col-md-6 col-sm-12">
+                                <p style="font-weight: bold;" class="mt-2">Ürün Bilgisi : {{ item.name }}</p>
+                                <p style="font-weight: bold;">Kategori : {{ item.category }}</p>
+                                <p style="font-weight: bold;">Açıklama : {{ item.description }}</p>
+                                <p style="font-weight: bold;color:green">Fiyat : {{ item.price }} TL </p>
                             </div>
                         </div>
-                        <!-- <div>
-                            <Card class="mt-2 opacity-80 " style="color:black;border: 1px solid grey;">
-                                <template #content>
-                                    <div class="d-flex">
-                                        <img class="opacity-full" alt="user header" style="width: 150px;height: 150px;"
-                                            :src="item.url" />
-                                        <div class="d-flex flex-column">
-                                            <div class="ml-5">
-                                                <h3 style="border-bottom: 1px solid black;">{{ item.name }}</h3>
-                                            </div>
-                                            <div>
-                                                <p class="ml-5 mt-3 opacity-100">
-                                                    Açıklama : {{ item.description }}
-                                                </p>
-                                                <p class="ml-5 mt-3 opacity-100">
-                                                    Fiyat : {{ item.price }}
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </template>
-                            </Card>
-                        </div> -->
-
                     </div>
                 </div>
             </div>
@@ -96,6 +68,7 @@
 import { onMounted, ref } from "vue";
 import axios from "axios";
 const products = ref([]);
+const pageControl = ref('category')
 const selectedCardIndex = ref(null)
 const filterProducts = ref([])
 const items = ref('')
@@ -157,52 +130,93 @@ const getProducts = async () => {
 
 const list = ref([
     {
-        label: 'Sıcak İçecekler',
-        icon: 'pi pi-home',
-    },
-    {
-        label: 'Soğuk İçecekler',
+        label: 'Kahvaltı',
         icon: 'pi pi-star',
+        image: 'https://karekodrestaurantmenu.com/category-pics/kahvaltilar.jpg'
     },
     {
         label: 'Atıştırmalıklar',
         icon: 'pi pi-home',
+        image: 'https://karekodrestaurantmenu.com/Pictures/91615fd9-50ff-42e1-8c5d-211194b5c1d9.jpg'
+    },
+    {
+        label: 'Salatalar',
+        icon: 'pi pi-home',
+        image: 'https://karekodrestaurantmenu.com/category-pics/salatalar.jpg'
     },
     {
         label: 'Tatlılar',
         icon: 'pi pi-star',
+        image: 'https://karekodrestaurantmenu.com/category-pics/tatlilar.jpg'
+    },
+    {
+        label: 'Sıcak İçecekler',
+        icon: 'pi pi-home',
+        image: 'https://karekodrestaurantmenu.com/category-pics/sicakicecekler.jpg'
+    },
+    {
+        label: 'Soğuk İçecekler',
+        icon: 'pi pi-star',
+        image: 'https://karekodrestaurantmenu.com/category-pics/sogukicecekler.jpg'
+    },
+    {
+        label: 'makarnalar',
+        icon: 'pi pi-star',
+        image: 'https://karekodrestaurantmenu.com/category-pics/makarnalar.jpg'
+    },
+    {
+        label: 'Kırmızı Etler',
+        icon: 'pi pi-star',
+        image: 'https://karekodrestaurantmenu.com/category-pics/kirmizietler.jpg'
+    },
+    {
+        label: 'Beyaz Etler',
+        icon: 'pi pi-star',
+        image: 'https://karekodrestaurantmenu.com/category-pics/beyaz-etler.jpg'
+    },
+    {
+        label: 'Nargileler',
+        icon: 'pi pi-star',
+        image: 'https://karekodrestaurantmenu.com/Pictures/a43e7839-1aa3-44d9-ab89-23e81e8ab815.jpg'
     },
     {
         label: 'İletişim',
         icon: 'pi pi-star',
-    },
-    {
-        label: 'Günün Menüsü',
-        icon: 'pi pi-star',
+        image: 'https://karekodrestaurantmenu.com/category-pics/kahvaltilar.jpg'
     },
 
 ])
 const cardControls = async (item, index) => {
     console.log(item)
-    if (item == 'Nargile') {
-        items.value = { label: 'Nargile' }
-        selectedCardIndex.value = 6;
-        filterProducts.value = products.value.filter(el => el.category == item);
-    } else if(item.label == "İletişim") {
-        items.value = { label: 'Peyas, Diclekent Villaları, 252. Sk. No:35, 21100 Kayapınar/Diyarbakır, Telefon : 0552 409 98 91' }
-        filterProducts.value = []
+    pageControl.value = ''
+    items.value = item
+    selectedCardIndex.value = index;
+    console.log('index', index)
+    if (index == 5) {
+        await getMealOfDay()
     } else {
-        console.log('cardElement', index)
-        items.value = item
-        selectedCardIndex.value = index;
-        console.log('index', index)
-        if (index == 5) {
-            await getMealOfDay()
-        } else {
-            filterProducts.value = products.value.filter(el => el.category == item.label);
-            // filterProducts.value = products.value
-        }
+        filterProducts.value = products.value.filter(el => el.category == item.label);
+        // filterProducts.value = products.value
     }
+    // if (item == 'Nargile') {
+    //     items.value = { label: 'Nargile' }
+    //     selectedCardIndex.value = 6;
+    //     filterProducts.value = products.value.filter(el => el.category == item);
+    // } else if (item.label == "İletişim") {
+    //     items.value = { label: 'Peyas, Diclekent Villaları, 252. Sk. No:35, 21100 Kayapınar/Diyarbakır, Telefon : 0552 409 98 91' }
+    //     filterProducts.value = []
+    // } else {
+    //     console.log('cardElement', index)
+    //     items.value = item
+    //     selectedCardIndex.value = index;
+    //     console.log('index', index)
+    //     if (index == 5) {
+    //         await getMealOfDay()
+    //     } else {
+    //         filterProducts.value = products.value.filter(el => el.category == item.label);
+    //         // filterProducts.value = products.value
+    //     }
+    // }
     if (window.innerWidth < 600) {
         window.scrollTo({
             top: 350,
@@ -232,15 +246,6 @@ a.p-menuitem-link {
     border: none;
 } */
 
-.wallpaper-register {
-    background: url('../assets/pexels-chevanon-photography-324028.jpg') no-repeat center center;
-    background-size: cover;
-    /* height: 900px; */
-    position: absolute;
-    background-color: gray;
-    width: 100%;
-    z-index: -1;
-}
 
 /* .row {
     background-color: white;
@@ -261,27 +266,27 @@ a.p-menuitem-link {
         /* veya diğer uygun boyutlama seçenekleri */
     }
 
-    .wallpaper-register {
+    /* .wallpaper-register {
         background-color: black;
         height: 0px;
-    }
+    } */
 
     .custom-scroll-container {
-    overflow-y: hidden;
-}
+        overflow-y: hidden;
+    }
 
-.custom-scroll-container::-webkit-scrollbar {
-    display: none;
-}
+    .custom-scroll-container::-webkit-scrollbar {
+        display: none;
+    }
 
     .images {
         width: 100px;
         height: 75px;
     }
 
-    .row {
+    /* .row {
         background-color: black;
-    }
+    } */
 
 }
 
@@ -305,6 +310,7 @@ a.p-menuitem-link {
     max-height: 750px;
     overflow: auto;
 }
+
 
 .custom-scroll-container::-webkit-scrollbar {
     width: 10px;

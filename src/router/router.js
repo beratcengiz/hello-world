@@ -5,7 +5,7 @@ import HelloDeneme from '@/components/HelloDeneme.vue'
 import LoginPage from '@/components/LoginPage.vue';
 import AdminPage from '@/components/AdminPage.vue'
 import MealOfDay from '@/components/MealOfDayPage.vue'
-
+import HotDrinks from '@/components/HotDrinksPage'
 const routes = [
     {
         path: '/',
@@ -26,6 +26,11 @@ const routes = [
         path: '/mealoftheday',
         name: 'mealofday', // '/das' rotası için benzersiz isim
         component: MealOfDay,
+    },
+    {
+        path: '/sicakicecekler',
+        name: 'hotdrinks', // '/das' rotası için benzersiz isim
+        component: HotDrinks,
     },
 ];
 
