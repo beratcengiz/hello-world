@@ -256,7 +256,9 @@ const doLogin = () => {
   axios.post('https://avasin20240124173421.azurewebsites.net/api/Login', object)
     .then(res => {
       console.log('res', res);
+      console.log('router',router)
       if (res.status == 200) {
+        localStorage.setItem('token', JSON.stringify(object));
         router.push('/admin')
       }
     })

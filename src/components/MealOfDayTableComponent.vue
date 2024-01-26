@@ -42,7 +42,7 @@
                         {{ formatCurrency(slotProps.data.price) }}
                     </template>
                 </Column>
-                <Column field="category" header="Category" sortable style="min-width:10rem"></Column>
+                <!-- <Column field="category" header="Category" sortable style="min-width:10rem"></Column> -->
                 <!-- <Column field="rating" header="Reviews" sortable style="min-width:12rem">
                     <template #body="slotProps">
                         <Rating :modelValue="slotProps.data.rating" :readonly="true" :cancel="false" />
@@ -77,7 +77,7 @@
 
             </div>
 
-            <div class="field">
+            <!-- <div class="field">
                 <label class="mb-3">Category</label>
                 <div class="formgrid grid">
                     <div class="field-radiobutton col-6">
@@ -105,17 +105,17 @@
                         <label for="category4">Yemekler</label>
                     </div>
                 </div>
-            </div>
+            </div> -->
 
             <div class="formgrid grid">
                 <div class="field col">
                     <label for="price">Price</label>
                     <InputNumber id="price" v-model="product.price" mode="currency" currency="USD" locale="en-US" />
                 </div>
-                <div class="field col">
+                <!-- <div class="field col">
                     <label for="quantity">Quantity</label>
                     <InputNumber id="quantity" v-model="product.quantity" integeronly />
-                </div>
+                </div> -->
             </div>
             <template #footer>
                 <Button label="Cancel" icon="pi pi-times" text @click="hideDialog" />
@@ -159,7 +159,7 @@ onMounted(() => {
     const getCardDetails = async () => {
         await axios
             .get(
-                "https://berat.tostbang.com/api/MealOfDay"
+                "https://avasin20240124173421.azurewebsites.net/api/MealOfDay"
             )
             .then((res) => {
                 console.log('res', res)
@@ -219,13 +219,13 @@ const saveProduct = async () => {
         "category": product.value.category,
         "url": product.value.url
     }
-    await axios.post("https://berat.tostbang.com/api/MealOfDay", json)
+    await axios.post("https://avasin20240124173421.azurewebsites.net/api/MealOfDay", json)
         .then(res => console.log('res', res)).catch(el => console.log('el', el))
     setTimeout(async () => {
         const getCardDetails = async () => {
             await axios
                 .get(
-                    "https://berat.tostbang.com/api/MealOfDay"
+                    "https://avasin20240124173421.azurewebsites.net/api/MealOfDay"
                 )
                 .then((res) => {
                     console.log('res', res)
@@ -239,7 +239,7 @@ const saveProduct = async () => {
 const editProducts = async () => {
     console.log('prod', product.value);
     console.log('products', products.value)
-    await axios.put(`https://berat.tostbang.com/api/MealOfDay/${product.value.id}`, product.value).then(res => {
+    await axios.put(`https://avasin20240124173421.azurewebsites.net/api/MealOfDay/${product.value.id}`, product.value).then(res => {
         console.log('res', res)
     }).catch((error) => console.log(error));
     products.value = products.value.map(el => {
@@ -248,7 +248,7 @@ const editProducts = async () => {
                 "id": 1,
                 "name": product.value.name,
                 "price": product.value.price,
-                "category": product.value.category,
+                "description": product.value.description,
                 "url": product.value.url
             }
             el = json;
@@ -284,7 +284,7 @@ const editProduct = async (prod) => {
 //     deleteProductDialog.value = true;
 // };
 const deleteProduct = async () => {
-    await axios.delete(`https://berat.tostbang.com/api/MealOfDay/${product.value.id}`)
+    await axios.delete(`https://avasin20240124173421.azurewebsites.net/api/MealOfDay/${product.value.id}`)
         .then(res => {
             console.log('res', res)
         }).catch((error) => console.log(error));
