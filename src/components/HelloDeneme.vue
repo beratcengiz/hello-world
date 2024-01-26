@@ -181,17 +181,20 @@
           <div class="card-header d-flex justify-content-center bg-white" style="border:none">
             <img class="logo-img" src="../assets/avasin.png" />
           </div>
+          <div class="d-flex justify-content-center">
+            <p style="color:green">Giriş Ekranı</p>
+          </div>
           <form @submit.prevent="doLogin">
             <div class="form-group">
-              <label for="exampleInputEmail1">Kullancı Adı</label>
+              <label for="exampleInputEmail1">Kullanıcı Adı</label>
               <input v-model="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                placeholder="Enter email">
+                placeholder="kullanıcı adı">
               <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
             </div>
             <div class="form-group">
               <label for="exampleInputPassword1">Şifre</label>
               <input v-model="password" type="password" class="form-control" id="exampleInputPassword1"
-                placeholder="Password">
+                placeholder="şifre">
             </div>
             <!-- <div class="form-check">
               <input type="checkbox" class="form-check-input" id="exampleCheck1">
@@ -206,21 +209,24 @@
           <div class="card-header d-flex justify-content-center bg-white" style="border:none">
             <img class="logo-img" src="../assets/avasin.png" />
           </div>
+          <div class="d-flex justify-content-center">
+            <p style="color:green">Şifre Yenileme Ekranı</p>
+          </div>
           <form @submit.prevent="refreshLogin">
             <div class="form-group">
               <label for="exampleInputEmail1">Kullancı Adı</label>
               <input v-model="username1" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                placeholder="Enter email">
+                placeholder="kullanıcı adı">
             </div>
             <div class="form-group">
               <label for="exampleInputEmail1">Eski Şifre</label>
               <input v-model="passwordold" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                placeholder="Enter email">
+                placeholder="eski şifre">
             </div>
             <div class="form-group">
               <label for="exampleInputPassword1">Yeni Şifre</label>
               <input v-model="passwordnew"  class="form-control" id="exampleInputPassword1"
-                placeholder="Password">
+                placeholder="yeni şifre">
             </div>
             <!-- <div class="form-check">
               <input type="checkbox" class="form-check-input" id="exampleCheck1">
