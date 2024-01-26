@@ -11,7 +11,7 @@
 
                 <template #end>
                     <!-- <FileUpload mode="basic" accept="image/*" :maxFileSize="1000000" label="Import" chooseLabel="Import" class="mr-2 inline-block" /> -->
-                    <Button label="Excel Çıktısı Al" icon="pi pi-upload" severity="help" @click="exportCSV($event)" />
+                    <!-- <Button label="Excel Çıktısı Al" icon="pi pi-upload" severity="help" @click="exportCSV($event)" /> -->
                 </template>
             </Toolbar>
 
@@ -30,19 +30,19 @@
                     </div>
                 </template>
 
-                <Column field="name" header="Name" sortable style="min-width:16rem"></Column>
+                <Column field="name" header="Ürün İsmi" sortable style="min-width:16rem"></Column>
                 <Column header="Image">
                     <template #body="slotProps">
                         <img :src="slotProps.data.url" :alt="slotProps.data.url" class="shadow-2 border-round"
                             style="width: 64px" />
                     </template>
                 </Column>
-                <Column field="price" header="Price" sortable style="min-width:8rem">
+                <Column field="price" header="Fiyat" sortable style="min-width:8rem">
                     <template #body="slotProps">
                         {{ formatCurrency(slotProps.data.price) }}
                     </template>
                 </Column>
-                <Column field="category" header="Category" sortable style="min-width:10rem"></Column>
+                <Column field="category" header="Kategori" sortable style="min-width:10rem"></Column>
                 <!-- <Column field="rating" header="Reviews" sortable style="min-width:12rem">
                     <template #body="slotProps">
                         <Rating :modelValue="slotProps.data.rating" :readonly="true" :cancel="false" />
@@ -61,13 +61,13 @@
         <Dialog v-model:visible="productDialog" :style="{ width: '450px' }" header="Product Details" :modal="true"
             class="p-fluid">
             <div class="field">
-                <label for="name">Name</label>
+                <label for="name">Ürün İsmi</label>
                 <InputText id="name" v-model.trim="product.name" required="true" autofocus
                     :class="{ 'p-invalid': submitted && !product.name }" />
                 <small class="p-error" v-if="submitted && !product.name">Name is required.</small>
             </div>
             <div class="field">
-                <label for="description">Description</label>
+                <label for="description">Açıklama</label>
                 <Textarea id="description" v-model="product.description" required="true" rows="3" cols="20" />
             </div>
 
@@ -78,7 +78,7 @@
             </div>
 
             <div class="field">
-                <label class="mb-3">Category</label>
+                <label class="mb-3">Kategori</label>
                 <div class="formgrid grid">
                     <div class="field-radiobutton col-6">
                         <RadioButton id="category1" name="category" value="Kahvaltı" v-model="product.category" />
@@ -137,17 +137,13 @@
 
             <div class="formgrid grid">
                 <div class="field col">
-                    <label for="price">Price</label>
-                    <InputNumber id="price" v-model="product.price" mode="currency" currency="USD" locale="en-US" />
-                </div>
-                <div class="field col">
-                    <label for="quantity">Quantity</label>
-                    <InputNumber id="quantity" v-model="product.quantity" integeronly />
+                    <label for="price">Fiyat</label>
+                    <InputNumber id="price" v-model="product.price" />
                 </div>
             </div>
             <template #footer>
-                <Button label="Cancel" icon="pi pi-times" text @click="hideDialog" />
-                <Button label="Save" icon="pi pi-check" text @click="saveProduct" />
+                <Button label="Çıkış Yap" icon="pi pi-times" text @click="hideDialog" />
+                <Button label="Ekle" icon="pi pi-check" text @click="saveProduct" />
                 <Button label="Güncelle" icon="pi pi-check" text @click="editProducts" />
             </template>
         </Dialog>
@@ -155,7 +151,7 @@
         <Dialog v-model:visible="deleteProductDialog" :style="{ width: '450px' }" header="Confirm" :modal="true">
             <div class="confirmation-content">
                 <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
-                <span v-if="product">Are you sure you want to delete <b>{{ product.name }}</b>?</span>
+                <span v-if="product">Silmek istediğinize emin misiniz? <b>{{ product.name }}</b>?</span>
             </div>
             <template #footer>
                 <Button label="No" icon="pi pi-times" text @click="deleteProductDialog = false" />
@@ -179,26 +175,16 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { FilterMatchMode } from 'primevue/api';
-import { useToast } from 'primevue/usetoast';
+import { toast } from 'vue3-toastify';
+import 'vue3-toastify/dist/index.css';
 
 import axios from 'axios';
 onMounted(() => {
     // ProductService.getProducts().then((data) => (products.value = data));
-    const getCardDetails = async () => {
-        await axios
-            .get(
-                "https://avasin20240124173421.azurewebsites.net/api/Products"
-            )
-            .then((res) => {
-                console.log('res', res)
-                products.value = res.data;
-            })
-            .catch((error) => console.log(error));
-    };
+
     getCardDetails()
 });
 
-const toast = useToast();
 const dt = ref();
 const products = ref();
 const productDialog = ref(false);
@@ -226,44 +212,58 @@ const hideDialog = () => {
     productDialog.value = false;
     submitted.value = false;
 };
+const getCardDetails = async () => {
+    await axios
+        .get(
+            "https://avasin20240124173421.azurewebsites.net/api/Products"
+        )
+        .then((res) => {
+            console.log('res', res)
+            products.value = res.data;
+        })
+        .catch((error) => console.log(error));
+};
 const saveProduct = async () => {
     console.log(product.value)
     submitted.value = true;
-    // var json = {
-    //     "name": product.value.name,
-    //     "image": product.value.image,
-    //     "price": product.value.price,
-    //     "rating": 4.85,
-    //     "category": product.value.category,
-    //     "votes": 15,
-    //     "popular": true,
-    //     "description":product.value.description,
-    //     "available": true
-    // }
     var json = {
         "id": 0,
         "name": product.value.name,
         "price": product.value.price,
         "category": product.value.category,
-        "description" : product.value.description,
+        "description": product.value.description,
         "url": product.value.url
     }
-    await axios.post("https://avasin20240124173421.azurewebsites.net/api/Products", json)
-        .then(res => console.log('res', res)).catch(el => console.log('el', el))
-    setTimeout(async () => {
-        const getCardDetails = async () => {
-            await axios
-                .get(
-                    "https://avasin20240124173421.azurewebsites.net/api/Products"
-                )
-                .then((res) => {
-                    console.log('res', res)
-                    products.value = res.data;
-                })
-                .catch((error) => console.log(error));
-        };
-        await getCardDetails();
-    }, 1000);
+    await
+        axios.post("https://avasin20240124173421.azurewebsites.net/api/Products", json)
+            .then(async (res) => {
+                console.log('res', res)
+                await getCardDetails();
+                productDialog.value = false;
+                toast("Ürün eklendi !", {
+                    autoClose: 1000,
+                }); // ToastOptions
+            })
+            .catch(el => {
+                console.log('el',el)
+                toast("Ürün eklenemedi !", {
+                    autoClose: 1000,
+                }); // ToastOptions
+            })
+    // setTimeout(async () => {
+    //     const getCardDetails = async () => {
+    //         await axios
+    //             .get(
+    //                 "https://avasin20240124173421.azurewebsites.net/api/Products"
+    //             )
+    //             .then((res) => {
+    //                 console.log('res', res)
+    //                 products.value = res.data;
+    //             })
+    //             .catch((error) => console.log(error));
+    //     };
+    //     await getCardDetails();
+    // }, 1000);
 };
 const editProducts = async () => {
     console.log('prod', product.value);
@@ -278,7 +278,7 @@ const editProducts = async () => {
                 "name": product.value.name,
                 "price": product.value.price,
                 "category": product.value.category,
-                "description" : product.value.description,
+                "description": product.value.description,
                 "url": product.value.url
             }
             el = json;
@@ -342,9 +342,9 @@ const deleteProduct = async () => {
 //     }
 //     return id;
 // }
-const exportCSV = () => {
-    dt.value.exportCSV();
-};
+// const exportCSV = () => {
+//     dt.value.exportCSV();
+// };
 // const confirmDeleteSelected = () => {
 //     deleteProductsDialog.value = true;
 // };

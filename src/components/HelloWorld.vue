@@ -14,14 +14,22 @@
                     </div>
                     <div class="col-md-12 col-sm-12 col-lg-6" v-for="(item, index) in list" :key="index"
                         style="cursor: pointer;">
-                        <div class="card  text-white mt-2" @click="cardControls(item, index)" style="height: auto;">
-                            <img :src="item.image" class="card-img" alt="..." style="width: 100%;height: 300px;">
+                        <div class="card  text-white mt-2" v-if="item.adress" style="height: auto;">
+                            <img v-if="item.image" :src="item.image" class="card-img" alt="..." style="width: 100%;height: 300px;">
+                            <div class="d-flex justify-content-center align-items-center">
+                                <div class="card-title text-dark" style="font-weight: bold;" v-if="item.adress">
+                                    <p>Adres : {{ item.adress }}</p>
+                                    <p>Tel : {{ item.tel }}</p>
+                                </div>
+                                <!-- <h5 class="card-title text-dark" style="font-weight: bold;" >{{ item.label }}</h5> -->
+                                <!-- <p >{{ item }}</p> -->
+                            </div>
+                        </div>
+                        <div class="card  text-white mt-2" v-else @click="cardControls(item, index)" style="height: auto;">
+                            <img v-if="item.image" :src="item.image" class="card-img" alt="..." style="width: 100%;height: 300px;">
                             <div class="d-flex justify-content-center align-items-center">
                                 <h5 class="card-title text-dark" style="font-weight: bold;">{{ item.label }}</h5>
-                                <!-- <p class="card-text text-dark">This is a wider card with supporting text below as a natural
-                                    lead-in to
-                                    additional content. This content is a little bit longer.</p>
-                                <p class="card-text">Last updated 3 mins ago</p> -->
+                                <!-- <p >{{ item }}</p> -->
                             </div>
                         </div>
                     </div>
@@ -35,13 +43,30 @@
                 </template>
             </Card> -->
             <div class="col-md-12">
-                <Card class="mt-2 d-flex justify-content-center" style="background-color:#DDF2FD;">
-                    <template #content>
+                <div class="card" style="background-color: #DDF2FD;">
+                    <div class="row">
+                        <div class="col-md-4 col-lg-4">
+                        <label  @click="pageControl = 'category'" style="border-bottom:1px solid green;cursor: pointer;:hover(color: green;)">Anasayfaya Git</label>
+                    </div>
+                    <div class="col-md-4 col-lg-4 d-flex justify-content-center">
                         <h5>{{ items.label }}</h5>
-                        <button class="btn btn-success" style="position: absolute;right: 25px;top: 25px;"
-                            @click="pageControl = 'category'">Anasayfaya Git</button>
+                    </div>
+                    </div>
+                </div>
+                <!-- <Card class="mt-2 d-flex justify-content-center" style="background-color:#DDF2FD;">
+                    <template #content>
+                        <div class="row">
+                            <div class="col-lg-4 col-md-12">
+                                <button class="btn btn-success"
+                                    @click="pageControl = 'category'">Anasayfaya Git</button>
+                            </div>
+                            <div class="col-lg-4 col-md-12">
+                                <h5>{{ items.label }}</h5>
+                            </div>
+                            <div class="col-lg-4"></div>
+                        </div>
                     </template>
-                </Card>
+                </Card> -->
             </div>
             <div class="col-md-12 col-sm-12 col-lg-4 d-flex flex-column" v-for="item in filterProducts" :key="item">
                 <div class="card mt-2" style="height: auto;box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;">
@@ -71,6 +96,7 @@ const products = ref([]);
 const pageControl = ref('category')
 const selectedCardIndex = ref(null)
 const filterProducts = ref([])
+// import contact from '../assets/pexels-photo-4160128.jpeg'
 const items = ref('')
 const a = ref([])
 onMounted(async () => {
@@ -160,7 +186,7 @@ const list = ref([
         image: 'https://karekodrestaurantmenu.com/category-pics/sogukicecekler.jpg'
     },
     {
-        label: 'makarnalar',
+        label: 'Makarnalar',
         icon: 'pi pi-star',
         image: 'https://karekodrestaurantmenu.com/category-pics/makarnalar.jpg'
     },
@@ -180,9 +206,15 @@ const list = ref([
         image: 'https://karekodrestaurantmenu.com/Pictures/a43e7839-1aa3-44d9-ab89-23e81e8ab815.jpg'
     },
     {
-        label: 'İletişim',
+        label: 'Günün Yemeği',
         icon: 'pi pi-star',
         image: 'https://karekodrestaurantmenu.com/category-pics/kahvaltilar.jpg'
+    },
+    {
+        label: 'İletişim',
+        icon: 'pi pi-star',
+        adress : ' Peyas, Diclekent Villaları, 252. Sk. No:35, 21100 Kayapınar/Diyarbakır',
+        tel : '0552 409 98 91'
     },
 
 ])
@@ -192,7 +224,7 @@ const cardControls = async (item, index) => {
     items.value = item
     selectedCardIndex.value = index;
     console.log('index', index)
-    if (index == 5) {
+    if (index == 10) {
         await getMealOfDay()
     } else {
         filterProducts.value = products.value.filter(el => el.category == item.label);
@@ -217,12 +249,12 @@ const cardControls = async (item, index) => {
     //         // filterProducts.value = products.value
     //     }
     // }
-    if (window.innerWidth < 600) {
-        window.scrollTo({
-            top: 350,
-            behavior: 'smooth'
-        });
-    }
+    // if (window.innerWidth < 600) {
+    //     window.scrollTo({
+    //         top: 350,
+    //         behavior: 'smooth'
+    //     });
+    // }
 
 }
 // const getMenuItem = (item) => {
