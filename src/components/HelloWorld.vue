@@ -214,7 +214,7 @@ const list = ref([
     {
         label: 'Günün Yemeği',
         icon: 'pi pi-star',
-        image: 'https://karekodrestaurantmenu.com/category-pics/kahvaltilar.jpg'
+        image: 'https://firebasestorage.googleapis.com/v0/b/villa-avasin-hookah.appspot.com/o/kahve%2Bpasta.jpg?alt=media&token=17f21a4b-5954-4d51-a508-6d5d4b144fc7'
     },
     {
         label: 'İletişim',
