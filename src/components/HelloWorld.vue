@@ -20,8 +20,10 @@
                             <div class="d-flex justify-content-center align-items-center">
                                 <div class="card-title text-dark" style="font-weight: bold;" v-if="item.adress">
                                     <p><i class="pi pi-home" style="color: green"></i> Adres : {{ item.adress }}</p>
-                                    <p class="mt-4" @click="goInsta()"><i class="pi pi-instagram" style="color: green"></i> İnstagram : {{ item.insta }}</p>
-                                    <p class="mt-4"><i class="pi pi-mobile" style="color: green"></i> Tel : {{ item.tel }}</p>
+                                    <p class="mt-4" @click="goInsta()"><i class="pi pi-instagram" style="color: green"></i>
+                                        İnstagram : {{ item.insta }}</p>
+                                    <p class="mt-4"><i class="pi pi-mobile" style="color: green"></i> Tel : {{ item.tel }}
+                                    </p>
                                 </div>
                                 <!-- <h5 class="card-title text-dark" style="font-weight: bold;" >{{ item.label }}</h5> -->
                                 <!-- <p >{{ item }}</p> -->
@@ -74,20 +76,30 @@
                 </Card> -->
             </div>
             <div class="col-md-12 col-sm-12 col-lg-4 d-flex flex-column" v-for="item in filterProducts" :key="item">
-                <div class="card mt-2" style="height: auto;box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;">
+                <div class="card mt-2 product-card">
+
                     <div class="card-body">
                         <div class="row bg-white">
                             <div class="col-md-4 col-lg-4 col-sm-12 col-sm-12">
-                                <img class="opacity-full" alt="user header"
-                                    style="width: 150px;height: 150px;border-radius: 10%;" :src="item.url" />
+                                <!-- <img class="opacity-full" alt="user header"
+                                    style="width: 150px;height: 150px;border-radius: 10%;" :src="item.url" /> -->
+                                <Skeleton size="10rem" class="mr-2" v-if="load==0"></Skeleton>
+                                <Image v-else :src="item.url" alt="Image" width="160" height="150" preview />
                             </div>
                             <div class="col-md-2 col-lg-2 col-sm-12">
                             </div>
                             <div class="col-md-6 col-lg-6 col-sm-12">
-                                <p style="font-weight: bold;" class="mt-2">Ürün Bilgisi : {{ item.name }}</p>
-                                <p style="font-weight: bold;">Kategori : {{ item.category }}</p>
-                                <p style="font-weight: bold;">Açıklama : {{ item.description }}</p>
-                                <p style="font-weight: bold;color:green">Fiyat : {{ item.price }} TL </p>
+                                <div v-if="load==0">
+                                    <Skeleton width="8rem" height="1rem" class="mt-4"></Skeleton>
+                                    <Skeleton width="8rem" height="1rem" class="mt-2"></Skeleton>
+                                    <Skeleton width="8rem" height="1rem" class="mt-2"></Skeleton>
+                                </div>
+                                <div v-else>
+                                    <p style="font-weight: bold;" class="mt-2">Ürün Bilgisi : {{ item.name }}</p>
+                                    <p style="font-weight: bold;" v-if="item.category">Kategori : {{ item.category }}</p>
+                                    <p style="font-weight: bold;">Açıklama : {{ item.description }}</p>
+                                    <p style="font-weight: bold;color:green">Fiyat : {{ item.price }} TL </p>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -97,12 +109,14 @@
     </div>
 </template>
 <script setup>
+ /* eslint-disable */
 import { onMounted, ref } from "vue";
 import axios from "axios";
 const products = ref([]);
 const pageControl = ref('category')
 const selectedCardIndex = ref(null)
 const filterProducts = ref([])
+const load = ref(0)
 // import contact from '../assets/pexels-photo-4160128.jpeg'
 const items = ref('')
 const a = ref([])
@@ -166,19 +180,24 @@ const getProducts = async () => {
 
 const list = ref([
     {
-        label: 'Kahvaltı',
+        label: 'Kampanyalar',
         icon: 'pi pi-star',
-        image: 'https://karekodrestaurantmenu.com/category-pics/kahvaltilar.jpg'
+        image: 'https://firebasestorage.googleapis.com/v0/b/villa-avasin-hookah.appspot.com/o/kahve%2Bpasta.jpg?alt=media&token=17f21a4b-5954-4d51-a508-6d5d4b144fc7'
     },
     {
-        label: 'Atıştırmalıklar',
-        icon: 'pi pi-home',
-        image: 'https://karekodrestaurantmenu.com/Pictures/91615fd9-50ff-42e1-8c5d-211194b5c1d9.jpg'
+        label: 'Nargileler',
+        icon: 'pi pi-star',
+        image: 'https://karekodrestaurantmenu.com/Pictures/a43e7839-1aa3-44d9-ab89-23e81e8ab815.jpg'
     },
     {
         label: 'Salatalar',
         icon: 'pi pi-home',
         image: 'https://karekodrestaurantmenu.com/category-pics/salatalar.jpg'
+    },
+    {
+        label: 'Atıştırmalıklar',
+        icon: 'pi pi-home',
+        image: 'https://karekodrestaurantmenu.com/Pictures/91615fd9-50ff-42e1-8c5d-211194b5c1d9.jpg'
     },
     {
         label: 'Tatlılar',
@@ -211,42 +230,39 @@ const list = ref([
         image: 'https://karekodrestaurantmenu.com/category-pics/beyaz-etler.jpg'
     },
     {
-        label: 'Nargileler',
+        label: 'Kahvaltı',
         icon: 'pi pi-star',
-        image: 'https://karekodrestaurantmenu.com/Pictures/a43e7839-1aa3-44d9-ab89-23e81e8ab815.jpg'
-    },
-    {
-        label: 'Günün Yemeği',
-        icon: 'pi pi-star',
-        image: 'https://firebasestorage.googleapis.com/v0/b/villa-avasin-hookah.appspot.com/o/kahve%2Bpasta.jpg?alt=media&token=17f21a4b-5954-4d51-a508-6d5d4b144fc7'
+        image: 'https://karekodrestaurantmenu.com/category-pics/kahvaltilar.jpg'
     },
     {
         label: 'İletişim',
         icon: 'pi pi-star',
         adress: ' Peyas, Diclekent Villaları, 252. Sk. No:35, 21100 Kayapınar/Diyarbakır',
         tel: '0552 409 98 91',
-        insta : "https://www.instagram.com/villaavasinhookah/"
+        insta: "https://www.instagram.com/villaavasinhookah/"
     },
 
 ])
 const cardControls = async (item, index) => {
+    load.value = 0;
     console.log(item)
     pageControl.value = ''
     items.value = item
     selectedCardIndex.value = index;
     console.log('index', index)
-    if (index == 10) {
+    if (index == 0) {
         await getMealOfDay()
     } else {
         filterProducts.value = products.value.filter(el => el.category == item.label);
         // filterProducts.value = products.value
     }
-    if (window.innerWidth < 600) {
-        window.scrollTo({
+    window.scrollTo({
             top: 0,
             behavior: 'smooth'
         });
-    }
+    setTimeout(() => {
+        load.value = 1
+    }, 1000);
     // if (item == 'Nargile') {
     //     items.value = { label: 'Nargile' }
     //     selectedCardIndex.value = 6;
@@ -309,10 +325,20 @@ a.p-menuitem-link {
     height: 75px;
 }
 
+.product-card {
+    height: 300px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
 @media only screen and (max-width: 600px) {
     .card {
         height: 89px;
         /* veya diğer uygun boyutlama seçenekleri */
+    }
+
+    .product-card {
+        height: auto;
+        box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     }
 
     /* .wallpaper-register {
@@ -374,4 +400,5 @@ a.p-menuitem-link {
     /* Gri kaydırma kolunun rengi */
     border-radius: 50px;
     /* Yuvarlak köşeler */
-}</style>
+}
+</style>
