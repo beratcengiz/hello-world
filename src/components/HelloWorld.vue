@@ -77,29 +77,19 @@
             </div>
             <div class="col-md-12 col-sm-12 col-lg-4 d-flex flex-column" v-for="item in filterProducts" :key="item">
                 <div class="card mt-2 product-card">
-
                     <div class="card-body">
                         <div class="row bg-white">
                             <div class="col-md-4 col-lg-4 col-sm-12 col-sm-12">
-                                <!-- <img class="opacity-full" alt="user header"
-                                    style="width: 150px;height: 150px;border-radius: 10%;" :src="item.url" /> -->
-                                <Skeleton size="10rem" class="mr-2" v-if="load==0"></Skeleton>
-                                <Image v-else :src="item.url" alt="Image" width="160" height="150" preview />
+                                <img class="opacity-full" alt="user header"
+                                    style="width: 150px;height: 150px;border-radius: 10%;" :src="item.url" />
                             </div>
                             <div class="col-md-2 col-lg-2 col-sm-12">
                             </div>
                             <div class="col-md-6 col-lg-6 col-sm-12">
-                                <div v-if="load==0">
-                                    <Skeleton width="8rem" height="1rem" class="mt-4"></Skeleton>
-                                    <Skeleton width="8rem" height="1rem" class="mt-2"></Skeleton>
-                                    <Skeleton width="8rem" height="1rem" class="mt-2"></Skeleton>
-                                </div>
-                                <div v-else>
-                                    <p style="font-weight: bold;" class="mt-2">Ürün Bilgisi : {{ item.name }}</p>
-                                    <p style="font-weight: bold;" v-if="item.category">Kategori : {{ item.category }}</p>
-                                    <p style="font-weight: bold;">Açıklama : {{ item.description }}</p>
-                                    <p style="font-weight: bold;color:green">Fiyat : {{ item.price }} TL </p>
-                                </div>
+                                <p style="font-weight: bold;" class="mt-2">Ürün Bilgisi : {{ item.name }}</p>
+                                <p style="font-weight: bold;" v-if="item.category">Kategori : {{ item.category }}</p>
+                                <p style="font-weight: bold;">Açıklama : {{ item.description }}</p>
+                                <p style="font-weight: bold;color:green">Fiyat : {{ item.price }} TL </p>
                             </div>
                         </div>
                     </div>
@@ -109,14 +99,12 @@
     </div>
 </template>
 <script setup>
- /* eslint-disable */
 import { onMounted, ref } from "vue";
 import axios from "axios";
 const products = ref([]);
 const pageControl = ref('category')
 const selectedCardIndex = ref(null)
 const filterProducts = ref([])
-const load = ref(0)
 // import contact from '../assets/pexels-photo-4160128.jpeg'
 const items = ref('')
 const a = ref([])
@@ -194,6 +182,7 @@ const list = ref([
         icon: 'pi pi-home',
         image: 'https://karekodrestaurantmenu.com/category-pics/salatalar.jpg'
     },
+    
     {
         label: 'Atıştırmalıklar',
         icon: 'pi pi-home',
@@ -244,7 +233,6 @@ const list = ref([
 
 ])
 const cardControls = async (item, index) => {
-    load.value = 0;
     console.log(item)
     pageControl.value = ''
     items.value = item
@@ -256,13 +244,12 @@ const cardControls = async (item, index) => {
         filterProducts.value = products.value.filter(el => el.category == item.label);
         // filterProducts.value = products.value
     }
-    window.scrollTo({
+    if (window.innerWidth < 950) {
+        window.scrollTo({
             top: 0,
             behavior: 'smooth'
         });
-    setTimeout(() => {
-        load.value = 1
-    }, 1000);
+    }
     // if (item == 'Nargile') {
     //     items.value = { label: 'Nargile' }
     //     selectedCardIndex.value = 6;
@@ -400,5 +387,4 @@ a.p-menuitem-link {
     /* Gri kaydırma kolunun rengi */
     border-radius: 50px;
     /* Yuvarlak köşeler */
-}
-</style>
+}</style>
